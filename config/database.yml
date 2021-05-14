@@ -10,8 +10,29 @@ default: &default
   timeout: 5000
 
 development:
-  <<: *default
-  database: db/development.sqlite3
+  primary:
+    <<: *default
+    database: db/development1.sqlite3
+  primary_replica:
+    adapter: postgresql
+    pool: 5
+    host: localhost
+    post: 5432
+    database: rails_replica_testing
+    replica: true
+  shard1:
+    adapter: postgresql
+    pool: 5
+    host: localhost
+    post: 5432
+    database: rails_shard1
+  shard1_replica:
+    adapter: postgresql
+    pool: 5
+    host: localhost
+    post: 5432
+    database: rails_shard1_replica
+    replica: true
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
